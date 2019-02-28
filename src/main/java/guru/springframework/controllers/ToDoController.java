@@ -1,7 +1,7 @@
 package guru.springframework.controllers;
 
 import guru.springframework.domain.ToDo;
-import guru.springframework.services.ProductService;
+import guru.springframework.services.ToDoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,48 +11,48 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/todo")
-public class ProductController {
+public class ToDoController {
 
-    private ProductService productService;
+    private ToDoService todoService;
 
     @Autowired
-    public void setProductService(ProductService productService) {
-        this.productService = productService;
+    public void setToDoService(ToDoService todoService) {
+        this.todoService = todoService;
     }
 
     @RequestMapping("/list")
-    public String listProducts(Model model){
-        model.addAttribute("products", productService.listAll());
+    public String listtodos(Model model){
+        model.addAttribute("todos", todoService.listAll());
         return "todo/list";
     }
 
     @RequestMapping("/show/{id}")
-    public String getProduct(@PathVariable Integer id, Model model){
-        model.addAttribute("product", productService.getById(id));
+    public String gettodo(@PathVariable Integer id, Model model){
+        model.addAttribute("todo", todoService.getById(id));
         return "/todo/show";
     }
 
     @RequestMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("product", productService.getById(id));
+        model.addAttribute("todo", todoService.getById(id));
         return "/todo/todoform";
     }
 
     @RequestMapping("/new")
-    public String newProduct(Model model){
-        model.addAttribute("product", new ToDo());
+    public String newToDo(Model model){
+        model.addAttribute("todo", new ToDo());
         return "/todo/todoform";
     }
 
-    @RequestMapping(value = "/todo", method = RequestMethod.POST)
-    public String saveOrUpdateProduct(ToDo product){
-        ToDo savedProduct = productService.saveOrUpdate(product);
-        return "redirect:/todo/show/" + savedProduct.getId();
+    @RequestMapping(method = RequestMethod.POST)
+    public String saveOrUpdate(ToDo todo){
+        ToDo savedToDo = todoService.saveOrUpdate(todo);
+        return "redirect:/todo/show/" + savedToDo.getId();
     }
 
     @RequestMapping("/delete/{id}")
     public String delete(@PathVariable Integer id){
-        productService.delete(id);
+        todoService.delete(id);
         return "redirect:/todo/list";
     }
 }
