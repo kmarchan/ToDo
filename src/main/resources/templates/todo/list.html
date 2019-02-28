@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http:www.thymeleaf.org"/>
 <head>
-    <title>Spring Core Online Tutorial - List Products</title>
+    <title>Spring Core Online Tutorial - List</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
 
     <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
@@ -9,7 +9,7 @@
           rel="stylesheet" media="screen" />
 
     <script src="http://cdn.jsdelir.net/webjars/jquery/2.1.4.min.js"
-            th:src="@{/webjars/jquery/2.1.4/jqueary.min.js}"></script>
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
 
     <link href="../static/css/spring-core.css"
           th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
@@ -17,13 +17,12 @@
 <body>
  <div class="container">
      <div th:if="${not #lists.isEmpty(products)}">
-        <h2>Product List</h2>
-         <table class="table table-striped">
+        <h2>To Do List</h2>
+         <table style="max-width: 900px" class="table table-striped">
              <tr>
                  <th>Id</th>
-                 <th>Description</th>
-                 <th>Price</th>
-                 <th>Image URL</th>
+                 <th>Task</th>
+                 <th>Notes</th>
                  <th>List</th>
                  <th>Edit</th>
                  <th>Delete</th>
@@ -31,17 +30,16 @@
              <tr th:each="product : ${products}">
                  <td th:text="${product.id}"></td>
                  <td th:text="${product.description}"></td>
-                 <td th:text="${product.price}"></td>
                  <td th:text="${product.imageUrl}"></td>
-                 <td> <a th:href="${'/product/' + product.id}">View</a></td>
-                 <td> <a th:href="${'/product/edit/' + product.id}">Edit</a></td>
-                 <td> <a th:href="${'/product/delete/' + product.id}">Delete</a></td>
+                 <td> <a th:href="${'/todo/show/' + product.id}">View</a></td>
+                 <td> <a th:href="${'/todo/edit/' + product.id}">Edit</a></td>
+                 <td> <a th:href="${'/todo/delete/' + product.id}">Delete</a></td>
              </tr>
          </table>
      </div>
      <div class="row">
          <div class="col-sm-3">
-             <a href="/product/new">New Product</a>
+             <a href="/todo/new">New Task</a>
          </div>
      </div>
  </div>
